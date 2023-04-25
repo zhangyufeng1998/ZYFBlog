@@ -28,5 +28,11 @@ public class ArticleController {
         return result;
     }
 
+    @GetMapping("/articleList")
+    public ResponseResult articleList(Integer pageNum,Integer pageSize,Long categoryId){
+        //查询文章列表 封装成ResponseResult返回
+
+        return  articleService.articleList(pageNum,pageSize,categoryId);
+    }
 
 }

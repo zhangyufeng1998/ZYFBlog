@@ -4,6 +4,7 @@ import java.util.Date;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
  * @author makejava
  * @since 2023-03-28 20:06:33
  */
-@SuppressWarnings("serial")  //忽略警告
+
 @Data  //自动生成get、set方法
 @AllArgsConstructor  //自动生成全参构造方法
 @NoArgsConstructor  //自动生成无参构造方法
@@ -33,6 +34,10 @@ public class Article {
     private String summary;
     //所属分类id
     private Long categoryId;
+    //
+    @TableField(exist = false)
+    private String categoryName;
+
     //缩略图
     private String thumbnail;
     //是否置顶（0否，1是）
