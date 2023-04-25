@@ -7,6 +7,7 @@ import com.zyf.constants.SystemConstants;
 import com.zyf.domain.ResponseResult;
 import com.zyf.domain.entity.Article;
 import com.zyf.domain.entity.Category;
+import com.zyf.domain.vo.ArticleDetailVo;
 import com.zyf.domain.vo.ArticleListVo;
 import com.zyf.domain.vo.HotArticleVo;
 import com.zyf.domain.vo.PageVo;
@@ -68,12 +69,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         // 分页查询
         Page<Article> page = new Page<>(pageNum, pageSize);
-        page(page,lambdaQueryWrapper);
+        page(page, lambdaQueryWrapper);
 
         // 查询categoryName
-        List<Article> articles =  page.getRecords();
+        List<Article> articles = page.getRecords();
         // articleId去查询categoryName
-        for (Article article : articles){
+        for (Article article : articles) {
             Category category = categoryService.getById(article.getCategoryId());
             article.setCategoryName(category.getName());
 
@@ -84,9 +85,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(page.getRecords(), ArticleListVo.class);
 
 
-
         PageVo pageVo = new PageVo(articleListVos, page.getTotal());
 
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult getArticleDetail(Long id) {
+        // 根据id查询文章
+        Article article = getById(id);
+        // 转化成VO
+        ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
+        // 根据封分类id查询分类名称
+        Long categoryId = articleDetailVo.getCategoryId();
+        Category category = categoryService.getById(categoryId);
+        if (category != null) {
+            articleDetailVo.setCategoryName(category.getName());
+        }
+        // 封装响应返回
+        return ResponseResult.okResult(articleDetailVo);
     }
 }

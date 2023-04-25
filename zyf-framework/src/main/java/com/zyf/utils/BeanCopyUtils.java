@@ -33,14 +33,14 @@ public class BeanCopyUtils {
 
     }
 
-    public static void main(String[] args) {
-        Article article = new Article();
-        article.setId(1L);
-        article.setTitle("测试");
-
-        HotArticleVo hotArticleVo = copyBean(article, HotArticleVo.class);
-        System.out.println(hotArticleVo);
-
-    }
+//    public static void main(String[] args) {
+//        Article article = new Article();
+//        article.setId(1L);
+//        article.setTitle("测试");
+//
+//        HotArticleVo hotArticleVo = copyBean(article, HotArticleVo.class);
+//        System.out.println(hotArticleVo);
+//
+//    }
 
 }
